@@ -59,7 +59,7 @@ response = requests.delete(f"{base_url}/jobs/{job_id}")
 files = {'file': open('jobs.csv', 'rb')}
 response = requests.post(f"{base_url}/upload", files=files)
 
-How to programmatically RECEIVE data from the microservice:
+2. How to programmatically RECEIVE data from the microservice:
 
 The microservice returns data in JSON format. To receive and process the data:
 import requests
