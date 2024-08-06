@@ -40,7 +40,7 @@ db = SQLAlchemy(app)
 executor = ThreadPoolExecutor(max_workers=4)
 
 # Define Job model
-class JobService(db.Model):
+class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     company = db.Column(db.String(100), nullable=False)

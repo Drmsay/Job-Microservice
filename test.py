@@ -5,7 +5,7 @@ BASE_URL = 'http://localhost:5000'
 
 def test_upload_csv():
     url = f'{BASE_URL}/upload'
-    files = {'file': ('test.csv', open('test.csv', 'rb'))}
+    files = {'file': ('test_valid.csv', open('test_valid.csv', 'rb'))}
     response = requests.post(url, files=files)
     result = response.json()
     print("Upload CSV Response:", json.dumps(result, indent=2))
