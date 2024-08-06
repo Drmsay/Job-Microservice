@@ -1,71 +1,61 @@
 # Job Import Microservice
 
-This microservice allows for manual entry of job listings via CSV file upload, stores the data in a PostgreSQL database, and provides RESTful endpoints to retrieve and manage the imported job listings.
+This microservice provides functionality for importing job listings via CSV and retrieving job entries.
 
-## Communication Contract
+## Supported Operations
 
-### How to Programmatically REQUEST Data
+The microservice supports the following endpoints:
 
-To request data from this microservice, you can use HTTP requests. Here are the available endpoints:
+- Upload CSV file: `POST /upload`
+- GET all jobs: `GET /jobs`
 
-1. Upload CSV file:
-   - Endpoint: `/upload`
-   - Method: POST
-   - Content-Type: multipart/form-data
-   - Body: CSV file with key 'file'
+## How to programmatically REQUEST data from the microservice:
 
-   Example using Python requests:
+Example calls (Python):
 
-2. Get all jobs:
-  Endpoint: /jobs
-  Method: GET
-  Example using Python requests:
+```python
+import requests
 
-3. Get a specific job:
+base_url = "http://localhost:5000"
 
-  Endpoint: /jobs/<job_id>
-  Method: GET
-  Example using Python requests:
+# Upload a CSV file
+files = {'file': open('jobs.csv', 'rb')}
+response = requests.post(f"{base_url}/upload", files=files)
 
+# GET all jobs
+response = requests.get(f"{base_url}/jobs")
+```
 
-4. Create a new job:
+## How to programmatically RECEIVE data from the microservice:
 
-  Endpoint: /jobs
-  Method: POST
-  Content-Type: application/json
-  Body: JSON object with job details
-  Example using Python requests:
-   
+The microservice returns data in JSON format. To receive and process the data:
 
-5. Update an existing job:
+```python
+import requests
 
-  Endpoint: /jobs/<job_id>
-  Method: PUT
-  Content-Type: application/json
-  Body: JSON object with updated job details
-  Example using Python requests:
- 
+base_url = "http://localhost:5000"
 
-6. Delete a job:
+# GET all jobs
+response = requests.get(f"{base_url}/jobs")
 
-  Endpoint: /jobs/<job_id>
-  Method: DELETE
-  Example using Python requests:
- 
+if response.status_code == 200:
+    jobs = response.json()
+    for job in jobs:
+        print(f"Job ID: {job['id']}, Title: {job['title']}, Company: {job['company']}")
+else:
+    print(f"Error: {response.status_code}")
+```
 
-How to Programmatically RECEIVE Data
-  Data is received from the microservice in JSON format. Here's how to handle the responses:
-  
-  For successful requests, the response will have a status code of 200 (OK) or 201 (Created for POST requests).
-  The response body will contain a JSON object or array, depending on the endpoint.
+## Note on CSV Format
 
-  Example of parsing the response:
+The CSV file for upload should have the following columns:
+- title 
+- company 
+- location
+- description
+- posted_date (format: YYYY-MM-DD)
 
+## Error Handling
 
-For file upload (/upload endpoint):
-
-  On success, you'll receive a JSON object with 'message' and 'total_rows' keys.
-  On failure, you'll receive a JSON object with 'message', 'total_rows', 'error_count', and 'errors' keys.
-
-  Example: 
+The microservice will return appropriate HTTP status codes along with error messages in the response body for any issues encountered during requests.
 
