@@ -1,25 +1,51 @@
 import requests
 import os
+import csv
+from datetime import datetime
 
 # Base URL for the API
 base_url = "http://localhost:5000"
 
 # Function to print job details
 def print_job_details(job):
-    print(f"Job ID: {job.get('id', 'N/A')}")
-    print(f"Title: {job.get('title', 'N/A')}")
-    print(f"Company: {job.get('company', 'N/A')}")
-    print(f"Location: {job.get('location', 'N/A')}")
-    print(f"Description: {job.get('description', 'N/A')}")
-    print(f"Posted Date: {job.get('posted_date', 'N/A')}")
+    print(f"Job ID: {job['id']}")
+    print(f"Title: {job['title']}")
+    print(f"Company: {job['company']}")
+    print(f"Location: {job['location']}")
+    print(f"Description: {job['description']}")
+    print(f"Posted Date: {job['posted_date']}")
     print("--------------------")
+
+# Function to validate CSV content
+def validate_csv(file_path):
+    required_columns = ['title', 'company', 'location', 'description', 'posted_date']
+    with open(file_path, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        if not all(column in csv_reader.fieldnames for column in required_columns):
+            missing_columns = set(required_columns) - set(csv_reader.fieldnames)
+            print(f"Error: CSV is missing required columns: {', '.join(missing_columns)}")
+            return False
+        for row_number, row in enumerate(csv_reader, start=2):
+            if any(not row[column].strip() for column in required_columns):
+                print(f"Error: Empty value found in row {row_number}")
+                return False
+            try:
+                datetime.strptime(row['posted_date'], '%Y-%m-%d')
+            except ValueError:
+                print(f"Error: Invalid date format in row {row_number}. Expected format: YYYY-MM-DD")
+                return False
+    return True
 
 # Test CSV upload functionality
 def test_upload_csv():
     print("Testing CSV upload:")
-    csv_file_path = 'test_valid.csv'  # Path to the CSV file
+    csv_file_path = 'test_invalid.csv'  # Path to the CSV file
     if not os.path.exists(csv_file_path):
         print(f"Error: CSV file not found at {csv_file_path}")
+        return
+
+    if not validate_csv(csv_file_path):
+        print("Error: CSV file is not valid")
         return
 
     # Send POST request to upload CSV

@@ -1,11 +1,11 @@
 title,company,location,description,posted_date
 Software Engineer,TechCorp,San Francisco,Developing cutting-edge software solutions,2024-08-15
 Data Analyst,DataInsights,New York,Analyzing complex datasets,2024-08-16
-,MarketingPro,Chicago,Creating innovative marketing campaigns,2024-08-17
-Project Manager,,Seattle,Managing large-scale construction projects,2024-08-18
+Marketing Specialist,MarketingPro,Chicago,Creating innovative marketing campaigns,2024-08-17
+Project Manager,BuildIt,Seattle,Managing large-scale construction projects,2024-08-18
 UX Designer,DesignHub,Remote,Crafting user-friendly interfaces,2024-08-19
-Sales Representative,SellMore,Los Angeles,Driving sales and building client relationships,08-20-2024
+Sales Representative,SellMore,Los Angeles,Driving sales and building client relationships,08-20-2024  # Invalid date format (should be YYYY-MM-DD)
 Customer Support Specialist,HelpDesk,Dallas,Providing excellent customer service,2024-08-21
-Product Manager,InnovateNow,Boston,Driving product development and strategy,2024/08/22
+Product Manager,InnovateNow,Boston,Driving product development and strategy,2024-08-22
 Financial Analyst,MoneyMatters,Washington D.C.,Conducting financial modeling and analysis,2024-08-23
-HR Coordinator,PeopleFirst,Austin,Managing recruitment and employee relations,invalid-date
+HR Coordinator,PeopleFirst,Austin,Managing recruitment and employee relations,2024-08-24
