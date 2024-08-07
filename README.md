@@ -36,14 +36,21 @@ import requests
 base_url = "http://localhost:5000"
 
 # GET all jobs
-response = requests.get(f"{base_url}/jobs")
-
-if response.status_code == 200:
-    jobs = response.json()
-    for job in jobs:
-        print(f"Job ID: {job['id']}, Title: {job['title']}, Company: {job['company']}")
-else:
-    print(f"Error: {response.status_code}")
+try:
+    response = requests.get(f"{base_url}/jobs")
+    if response.status_code == 200:
+        jobs = response.json()
+        for job in jobs:
+            print(f"Title: {job['title']}")
+            print(f"Company: {job['company']}")
+            print(f"Location: {job['location']}")
+            print(f"Description: {job['description']}")
+            print(f"Posted Date: {job['posted_date']}")
+            print("--------------------")  # Separator between jobs
+    else:
+        print(f"Error: {response.status_code}")
+except requests.ConnectionError:
+    print("Failed to connect to the server. Is it running?")
 ```
 
 ## Note on CSV Format
