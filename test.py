@@ -39,7 +39,7 @@ def validate_csv(file_path):
 # Test CSV upload functionality
 def test_upload_csv():
     print("Testing CSV upload:")
-    csv_file_path = 'test_invalid.csv'  # Path to the CSV file
+    csv_file_path = 'test_valid.csv'  # Path to the CSV file
     if not os.path.exists(csv_file_path):
         print(f"Error: CSV file not found at {csv_file_path}")
         return
